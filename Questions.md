@@ -11,7 +11,7 @@ Producer 7 Produced: Product<6> on iteration 0
 Producer 1 Produced: Product<0> on iteration 0
 ```
 
-####Issue 1
+####Race Condition 1
 Notice that the Product Id’s that producer 0 and producer 1 produced are the same(Product<0>). Products should all have unique ID’s, so this indicates some race condition is occuring with product creation. 
 
 ```
@@ -27,7 +27,7 @@ private static int _id = 0;
   
   The issue is revealed by the constructor for Product. They are sharing one instance of _id, and using it to assign Id's. However, the creation of products is not synchronized in any way, so this critical section is unprotected. 
  
-####Issue 2
+####Race Condition 2
  
   The next issue is another race condition. The following section of code is a critical section for the producers, but is not protected. 
   
@@ -63,7 +63,8 @@ Producer 0 Produced: Product<3> on iteration 0, 0
 Producer 5 Produced: Product<10> on iteration 1, 2
 Producer 6 Produced: Product<11> on iteration 1, 3
   ```
-  
+ 
+####Deadlock
   
   
 #2
