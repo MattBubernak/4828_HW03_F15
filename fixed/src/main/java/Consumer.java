@@ -15,20 +15,18 @@ public class Consumer implements Runnable {
 
   public void run() {
     while (true) {
-      synchronized (queue) {
-        if (queue.size() > 0) {
-          Product p = queue.retrieve();
-          if (p.isDone()) {
-            String msg = "Consumer %d received done notification. Goodbye.";
-            System.out.println(String.format(msg, id));
-            return;
-          } else {
-            products.put(p.id(), p);
-            String msg = "Consumer %d Consumed: %s";
-            System.out.println(String.format(msg, id, p));
-          }
-        }
+      try {Product p = queue.retrieve();
+      if (p.isDone()) {
+        String msg = "Consumer %d received done notification. Goodbye.";
+        System.out.println(String.format(msg, id));
+        return;
+      } else {
+        products.put(p.id(), p);
+        String msg = "Consumer %d Consumed: %s";
+        System.out.println(String.format(msg, id, p));
       }
+    }
+    catch (InterruptedException e) {}
     }
   }
 }
