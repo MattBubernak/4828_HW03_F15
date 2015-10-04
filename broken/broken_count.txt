@@ -1,0 +1,81 @@
+Queue empty!
+Producer 0 Produced: Product<0> on iteration 0, 0
+Producer 2 Produced: Product<3> on iteration 0, 0
+Producer 6 Produced: Product<5> on iteration 0, 0
+Producer 1 Produced: Product<0> on iteration 0, 0
+Producer 4 Produced: Product<0> on iteration 0, 0
+Producer 6 Produced: Product<10> on iteration 1, 2
+Producer 1 Produced: Product<11> on iteration 1, 3
+Producer 3 Produced: Product<0> on iteration 0, 0
+Producer 6 Produced: Product<13> on iteration 2, 5
+Producer 1 Produced: Product<14> on iteration 2, 6
+Producer 6 Produced: Product<16> on iteration 3, 8
+Producer 0 Produced: Product<9> on iteration 1, 1
+Producer 1 Produced: Product<17> on iteration 3, 9
+Producer 8 Produced: Product<7> on iteration 0, 0
+Producer 9 Produced: Product<8> on iteration 0, 0
+Producer 7 Produced: Product<6> on iteration 0, 0
+Producer 3 Produced: Product<15> on iteration 1, 7
+Producer 4 Produced: Product<12> on iteration 1, 4
+Producer 5 Produced: Product<4> on iteration 0, 0
+Too many items in the queue: 19!
+Too many items in the queue: 19!
+Consumer 0 Consumed: Product<3>
+Consumer 0 Consumed: Product<15>
+Consumer 0 Consumed: Product<12>
+Consumer 0 Consumed: Product<4>
+Too many items in the queue: 15!
+3
+4
+12
+15
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!
+Too many items in the queue: 15!

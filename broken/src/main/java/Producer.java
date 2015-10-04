@@ -10,11 +10,13 @@ public class Producer implements Runnable {
 
   public void run() {
     int count = 0;
+    int size;
     while (count < 20) {
-      if (queue.size() < 10) {
+      size = queue.size();
+      if (size < 10) {
         Product p = new Product();
-        String msg = "Producer %d Produced: %s on iteration %d";
-        System.out.println(String.format(msg, id, p, count));
+        String msg = "Producer %d Produced: %s on iteration %d, %d";
+        System.out.println(String.format(msg, id, p, count,size));
         queue.append(p);
         count++;
       }
