@@ -27,7 +27,8 @@ private static int _id = 0;
   
   The issue is revealed by the constructor for Product. They are sharing one instance of _id, and using it to assign Id's. However, the creation of products is not synchronized in any way, so this critical section is unprotected. 
  
- ####Issue 2
+####Issue 2
+ 
   The next issue is another race condition. The following section of code is a critical section for the producers, but is not protected. 
   
   ```
@@ -42,7 +43,7 @@ private static int _id = 0;
    Because all producers can enter this section concurrently, they could all do a read on the queue size at say, 19, and all decide to produce one more product. Then, even though the queue is now full after one more production, an extra 9 products have been added. The below output, from the beginnig of the execution, shows that far too many products are creating, indicating another race condition problem.
   
   ```
-  Producer 5 Produced: Product<5> on iteration 0, 0
+Producer 5 Produced: Product<5> on iteration 0, 0
 Producer 1 Produced: Product<2> on iteration 0, 0
 Producer 6 Produced: Product<6> on iteration 0, 0
 Producer 4 Produced: Product<4> on iteration 0, 0
