@@ -64,7 +64,13 @@ Producer 5 Produced: Product<10> on iteration 1, 2
 Producer 6 Produced: Product<11> on iteration 1, 3
   ```
  
-####Livelock
+####Producers/Consumers stall out
+
+When this code is run, this happens to my CPU. 
+
+<img src="CPU_Utilization.PNG" alt="Drawing" style="width: 200px; height:200px;"/>
+
+Very high CPU utilization, with no progress being made. If we had locks, we may suspect some sort of livelock situation. However, since there is no syncronization implemented, the issue must lie with the "while" loops in the producers/consumers...
 
   
   
