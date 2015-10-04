@@ -67,6 +67,6 @@ Producer 6 Produced: Product<11> on iteration 1, 3
 ####Deadlock
   
   
-#2
+#2 Broken2
   
-#3
+#3 Fixed
