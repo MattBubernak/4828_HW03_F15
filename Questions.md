@@ -254,7 +254,7 @@ synchronized(lock) {
   }
 ```
 
-Consumer
+Consumer:
 
 ```
   public void run() {
