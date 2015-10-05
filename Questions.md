@@ -75,32 +75,96 @@ Very high CPU utilization, with no progress being made. If we had locks, we may 
   
   
 #2: Broken2
-Putting the keyword `synchronized` separately in the methods of 'ProductionLine.java' file sychronizes these methods independent of each other. However, it does not rid the program of the issues because the operations like reading queue sizes and dequeue by consumers or reading queue sizes and enqueue by producers need to be performed as **a transaction** rather than independent actions. When these operations are synchronized and perfomed separately, it might lead to a situation where the product ids printed will not span from 0-199. The following output that was obtained while running the producer/consumer program further explains the claim.
+Putting the keyword `synchronized` separately in the methods of 'ProductionLine.java' file sychronizes these methods independent of each other. However, it does not rid the program of all the concurrency issues.
 
-* The output of the product ids printed by the main thread looks like below. It doesn't print all the way from 0-199.
-
-```
-179
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
+####Race Condition 1:
+In the 'Producer.java' file, the following snippet of code demonstrates that there is still race conditions happening around the code `Product p = new Product()`.
 
 ```
+    while (count < 20) {
+      if (queue.size() < 10) {
+  
+        Product p = new Product();
+        String msg = "Producer %d Produced: %s on iteration %d";
+        System.out.println(String.format(msg, id, p, count));
+        queue.append(p);
+        count++;
+      }
+    }
+```
 
-* On inspecting the code further, it seems that the producers are producing the products from 0-199 as evident by the following output:
+Adding `synchronized` keyword on the 'ProductionLine.java' file does not address the issue of race condition around the creation of new products that get added to the queue. To illustrate the race condition, let's take a look at the following output obtained when running the broken 2 program.
+
+
+Output excerpt:
+```
+Queue empty!
+Producer 1 Produced: Product<1> on iteration 0
+Producer 0 Produced: Product<0> on iteration 0
+Producer 0 Produced: Product<8> on iteration 1
+Producer 0 Produced: Product<9> on iteration 2
+Producer 0 Produced: Product<10> on iteration 3
+Producer 1 Produced: Product<8> on iteration 1
+Producer 0 Produced: Product<11> on iteration 4
+Producer 7 Produced: Product<7> on iteration 0
+Producer 7 Produced: Product<14> on iteration 1
+Producer 7 Produced: Product<15> on iteration 2
+Producer 3 Produced: Product<3> on iteration 0
+Producer 4 Produced: Product<4> on iteration 0
+Producer 5 Produced: Product<5> on iteration 0
+Producer 6 Produced: Product<6> on iteration 0
+Producer 2 Produced: Product<2> on iteration 0
+Producer 0 Produced: Product<13> on iteration 5
+Producer 1 Produced: Product<12> on iteration 2
+Too many items in the queue: 17!
+Too many items in the queue: 17!
+Consumer 1 Consumed: Product<1>
+Consumer 1 Consumed: Product<0>
+Consumer 1 Consumed: Product<8>
+Consumer 3 Consumed: Product<9>
+Consumer 3 Consumed: Product<10>
+Consumer 3 Consumed: Product<8>
+```
+
+In the output excerpt, looking at `Product<8>`, it is evident that there is race condition around product creation. `Product<8>` gets created by Producers 0 and 1 and consumers 1 and 3 consume the product. This shows that adding the `synchronized` in all the methods of 'ProductionLine.java' does not rid the program of all the race conditions.
+
+####Race Condition 2:
+In spite of using the `synchronized` keyword, there is still a race condition. `synchronized` keyword does not co-ordinate the actions between different methods. The action of retrieving a product from the queue should be followed by decrementing the size of the queue and then only another consumer thread should be allowed to check the size of the queue. Hence, retrieve and size checking should be handled as *a transation*. Similarly, when a producer produces an item, it is followed by increasing the size of the queue. Adding `synchronized` keyword on the retrieve, append and size methods in 'ProductionLine.java'  does not guarantee that the folloiwng actions will be handled as a transaction:
+* append a product and then increment the size of the queue
+* retrieve a product and then decrement the size of the queue
+
+This might lead to a situation where, for instance, 8 threads read the size of the queue being greater than zero. Hence, they enter the following section of code in a synchronized fashion but before the size of the queue gets updated by consumer threads already inside the `if` statement.
+
+```
+if (queue.size() > 0) {
+        Product p = queue.retrieve();
+        if (p.isDone()) {
+          String msg = "Consumer %d received done notification. Goodbye.";
+          System.out.println(String.format(msg, id));
+          return;
+        } else {
+          products.put(p.id(), p);
+          String msg = "Consumer %d Consumed: %s";
+          System.out.println(String.format(msg, id, p));
+        }
+      }
+```
+
+This situation becomes catastrophic if the number of elements in the queue is 7 and there are 8 consumer threads in the `if` statement awaiting to retrieve the products from the queue in a synchronized manner. This leads to the program running into  `IndexOutOfBoundsException`.
+
+On running broken 2 program, the following output was obtained that demonstrates the existence of race condition 2. When running the program, the following `IndexOutOfBoundsException` was seen:
+
+```
+Producer 7 Produced: Product<152> on iteration 4Exception in thread "Thread-18" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.LinkedList.checkElementIndex(LinkedList.java:553)
+	at java.util.LinkedList.remove(LinkedList.java:523)
+	at ProductionLine.retrieve(ProductionLine.java:21)
+	at Consumer.run(Consumer.java:20)
+	at java.lang.Thread.run(Thread.java:745)
+``` 
+
+As a result of the `IndexOutOfBoundsException`, the consumer thread was killed. This created a scenario where all the producer threads produced but there weren't enough consumer threads to empty the queue.
+
 ```
 Producer 7 Produced: Product<190> on iteration 10
 Producer 7 Produced: Product<191> on iteration 11
@@ -138,25 +202,27 @@ Producer 7 is done. Shutting down.
 9
 10
 ```
-* However, the consumers are only consuming items up until 195. On inspecting the output further, the output shows that there was a single instance of `IndexOutOfBoundsException`.
+
+The above excerpt shows that Producer 7 produced product 199. However, the consumer only consumed upto 195 as seen in the following excerpt.
 
 ```
-Producer 7 Produced: Product<152> on iteration 4Exception in thread "Thread-18" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
-	at java.util.LinkedList.checkElementIndex(LinkedList.java:553)
-	at java.util.LinkedList.remove(LinkedList.java:523)
-	at ProductionLine.retrieve(ProductionLine.java:21)
-	at Consumer.run(Consumer.java:20)
-	at java.lang.Thread.run(Thread.java:745)
-```
- * Hence, although the producer and the consumers try to enqueue, dequeue and read the size of the queue in a synchronized fashion, the following scenario is still plausible:
-  1. 9 consumer threads see the queue size was greater than zero when executing the following line of code in 'Consumer.java':
-  	```
-	if (queue.size() > 0)
-	```
-  2. They enter the `if` statement in 'Consumer.java' before any consumer thread can change the size of the queue. Then, they try to execute the following line of code:
-	```
-	Product p = queue.retrieve();
-	```
-  3. If there are only 8 elements in the queue and 9 threads trying to retrieve a product from the queue, it will cause 'IndexOutOfBoundsException'. When the 9th thread tries to retrieve an element, it will be shut down before of 'IndexOutOfBoundsException'. Therefore, even though all the producers produce unique products, not all the products will be dequeued from the queue and hence, the main thread will only print from 0-195.
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
 
+```
 #3 Fixed
