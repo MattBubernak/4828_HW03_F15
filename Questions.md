@@ -75,7 +75,7 @@ Very high CPU utilization, with no progress being made. If we had locks, we may 
   
   
 #2: Broken2
-Putting the keyword `synchronized` separately in the methods of 'ProductionLine.java' file sychronizes these methods independent of each other. However, it does not rid the program of the issues that arise because of queue size being used by the producer and the consumer threads. The following output that was obtained while running the producer/consumer program further explains the claim.
+Putting the keyword `synchronized` separately in the methods of 'ProductionLine.java' file sychronizes these methods independent of each other. However, it does not rid the program of the issues because the operations like reading queue sizes and dequeue by consumers or reading queue sizes and enqueue by producers need to be performed as **a transaction** rather than independent actions. When these operations are synchronized and perfomed separately, it might lead to a situation where the product ids printed will not span from 0-199. The following output that was obtained while running the producer/consumer program further explains the claim.
 
 * The output of the product ids printed by the main thread looks like below. It doesn't print all the way from 0-199.
 
