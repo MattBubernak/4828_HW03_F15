@@ -75,7 +75,7 @@ Very high CPU utilization, with no progress being made. If we had locks, we may 
   
   
 #2: Broken2
-Putting the keyword `synchronized` separately in the methods of 'ProductionLine.java' file sychronizes these methods independent of each other. However, it does not rid the program of the concurrency issues. The following output that was obtained while running the producer/consumer program further eexplains the claim.
+Putting the keyword `synchronized` separately in the methods of 'ProductionLine.java' file sychronizes these methods independent of each other. However, it does not rid the program of the issues because the operations like reading queue sizes and dequeue by consumers or reading queue sizes and enqueue by producers need to be performed as **a transaction** rather than independent actions. When these operations are synchronized and perfomed separately, it might lead to a situation where the product ids printed will not span from 0-199. The following output that was obtained while running the producer/consumer program further explains the claim.
 
 * The output of the product ids printed by the main thread looks like below. It doesn't print all the way from 0-199.
 
@@ -102,6 +102,15 @@ Putting the keyword `synchronized` separately in the methods of 'ProductionLine.
 
 * On inspecting the code further, it seems that the producers are producing the products from 0-199 as evident by the following output:
 ```
+Producer 7 Produced: Product<190> on iteration 10
+Producer 7 Produced: Product<191> on iteration 11
+Producer 7 Produced: Product<192> on iteration 12
+Producer 7 Produced: Product<193> on iteration 13
+Producer 7 Produced: Product<194> on iteration 14
+Producer 7 Produced: Product<195> on iteration 15
+Consumer 6 Consumed: Product<187>
+Consumer 6 Consumed: Product<188>
+Consumer 6 Consumed: Product<189>
 Consumer 6 received done notification. Goodbye.
 Producer 5 is done. Shutting down.
 Consumer 9 Consumed: Product<190>
@@ -117,6 +126,17 @@ Producer 7 Produced: Product<197> on iteration 17
 Producer 7 Produced: Product<198> on iteration 18
 Producer 7 Produced: Product<199> on iteration 19
 Producer 7 is done. Shutting down.
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
 ```
 * However, the consumers are only consuming items up until 195. On inspecting the output further, the output shows that there was a single instance of `IndexOutOfBoundsException`.
 
@@ -128,12 +148,15 @@ Producer 7 Produced: Product<152> on iteration 4Exception in thread "Thread-18" 
 	at Consumer.run(Consumer.java:20)
 	at java.lang.Thread.run(Thread.java:745)
 ```
- * Hence, although the producer and the consumers try to enqueue or dequeue the elements from the queue in a synchronized fashion, the race condition is still exists as the method are not synchronized with each other. For the output to look like above,a scenario could be:
- 1. Consumer threads see the queue size was greater than zero when executing the following line of code in 'Consumer.java':
-```
-if (queue.size() > 0)
-```
-
- 2. 9 consumer threads attempted to retrieve values from the queue but the queue only contains 8 elements. 'ProductionLine.java' does not check whether a thread is trying to dequeue elements when the queue is empty. In this case, when the final consumer thread attempts to dequeue the product from the queue, it will cause 'IndexOutOfBoundsException', hence leading up to a scenario where all the threads shutdown, however, the product ids printed do not span from 0 to 199.
+ * Hence, although the producer and the consumers try to enqueue, dequeue and read the size of the queue in a synchronized fashion, the following scenario is still plausible:
+  1. 9 consumer threads see the queue size was greater than zero when executing the following line of code in 'Consumer.java':
+  	```
+	if (queue.size() > 0)
+	```
+  2. They enter the `if` statement in 'Consumer.java' before any consumer thread can change the size of the queue. Then, they try to execute the following line of code:
+	```
+	Product p = queue.retrieve();
+	```
+  3. If there are only 8 elements in the queue and 9 threads trying to retrieve a product from the queue, it will cause 'IndexOutOfBoundsException'. When the 9th thread tries to retrieve an element, it will be shut down before of 'IndexOutOfBoundsException'. Therefore, even though all the producers produce unique products, not all the products will be dequeued from the queue and hence, the main thread will only print from 0-195.
 
 #3 Fixed
