@@ -1,0 +1,620 @@
+Queue empty!
+Producer 1 Produced: Product<1> on iteration 0
+Producer 1 Produced: Product<2> on iteration 1
+Producer 1 Produced: Product<3> on iteration 2
+Producer 1 Produced: Product<4> on iteration 3
+Producer 1 Produced: Product<5> on iteration 4
+Producer 1 Produced: Product<6> on iteration 5
+Producer 1 Produced: Product<7> on iteration 6
+Producer 1 Produced: Product<8> on iteration 7
+Producer 1 Produced: Product<9> on iteration 8
+Producer 1 Produced: Product<10> on iteration 9
+Producer 0 Produced: Product<0> on iteration 0
+Too many items in the queue: 11!
+Too many items in the queue: 11!
+Consumer 0 Consumed: Product<1>
+Producer 6 Produced: Product<11> on iteration 0
+Consumer 1 Consumed: Product<2>
+Consumer 2 Consumed: Product<3>
+Producer 4 Produced: Product<12> on iteration 0
+Consumer 2 Consumed: Product<4>
+Producer 4 Produced: Product<13> on iteration 1
+Consumer 2 Consumed: Product<5>
+Producer 4 Produced: Product<14> on iteration 2
+Consumer 0 Consumed: Product<8>
+Consumer 0 Consumed: Product<9>
+Consumer 0 Consumed: Product<10>
+Consumer 0 Consumed: Product<0>
+Consumer 0 Consumed: Product<11>
+Consumer 0 Consumed: Product<12>
+Consumer 0 Consumed: Product<13>
+Consumer 0 Consumed: Product<14>
+Producer 0 Produced: Product<16> on iteration 1
+Producer 0 Produced: Product<17> on iteration 2
+Producer 0 Produced: Product<18> on iteration 3
+Producer 0 Produced: Product<19> on iteration 4
+Producer 0 Produced: Product<20> on iteration 5
+Producer 0 Produced: Product<21> on iteration 6
+Producer 0 Produced: Product<22> on iteration 7
+Producer 0 Produced: Product<23> on iteration 8
+Producer 0 Produced: Product<24> on iteration 9
+Producer 0 Produced: Product<25> on iteration 10
+Consumer 0 Consumed: Product<16>
+Consumer 0 Consumed: Product<17>
+Consumer 0 Consumed: Product<18>
+Consumer 0 Consumed: Product<19>
+Producer 6 Produced: Product<29> on iteration 1
+Producer 6 Produced: Product<31> on iteration 2
+Producer 0 Produced: Product<30> on iteration 11
+Producer 6 Produced: Product<32> on iteration 3
+Producer 0 Produced: Product<33> on iteration 12
+Producer 6 Produced: Product<34> on iteration 4
+Consumer 1 Consumed: Product<7>
+Consumer 2 Consumed: Product<6>
+Producer 9 Produced: Product<28> on iteration 0
+Consumer 0 Consumed: Product<20>
+Consumer 0 Consumed: Product<21>
+Consumer 0 Consumed: Product<22>
+Consumer 0 Consumed: Product<23>
+Producer 6 Produced: Product<35> on iteration 5
+Consumer 0 Consumed: Product<24>
+Producer 6 Produced: Product<36> on iteration 6
+Producer 6 Produced: Product<37> on iteration 7
+Producer 6 Produced: Product<38> on iteration 8
+Consumer 0 Consumed: Product<25>
+Consumer 2 Consumed: Product<29>
+Producer 2 Produced: Product<27> on iteration 0
+Producer 1 Produced: Product<26> on iteration 10
+Producer 4 Produced: Product<15> on iteration 3
+Consumer 9 Consumed: Product<31>
+Consumer 9 Consumed: Product<30>
+Consumer 9 Consumed: Product<32>
+Consumer 9 Consumed: Product<33>
+Consumer 9 Consumed: Product<34>
+Consumer 9 Consumed: Product<28>
+Consumer 8 Consumed: Product<35>
+Consumer 8 Consumed: Product<36>
+Consumer 8 Consumed: Product<37>
+Consumer 8 Consumed: Product<38>
+Producer 3 Produced: Product<40> on iteration 0
+Producer 3 Produced: Product<41> on iteration 1
+Producer 3 Produced: Product<42> on iteration 2
+Producer 3 Produced: Product<43> on iteration 3
+Producer 3 Produced: Product<44> on iteration 4
+Producer 3 Produced: Product<45> on iteration 5
+Producer 3 Produced: Product<46> on iteration 6
+Producer 3 Produced: Product<47> on iteration 7
+Producer 3 Produced: Product<48> on iteration 8
+Producer 3 Produced: Product<49> on iteration 9
+Producer 7 Produced: Product<39> on iteration 0
+Consumer 5 Consumed: Product<40>
+Consumer 5 Consumed: Product<41>
+Consumer 5 Consumed: Product<42>
+Consumer 5 Consumed: Product<43>
+Consumer 5 Consumed: Product<44>
+Consumer 5 Consumed: Product<45>
+Consumer 5 Consumed: Product<46>
+Consumer 5 Consumed: Product<47>
+Consumer 5 Consumed: Product<48>
+Consumer 5 Consumed: Product<49>
+Consumer 5 Consumed: Product<39>
+Producer 1 Produced: Product<50> on iteration 11
+Producer 1 Produced: Product<51> on iteration 12
+Producer 1 Produced: Product<52> on iteration 13
+Producer 1 Produced: Product<53> on iteration 14
+Producer 1 Produced: Product<54> on iteration 15
+Producer 1 Produced: Product<55> on iteration 16
+Producer 1 Produced: Product<56> on iteration 17
+Producer 1 Produced: Product<57> on iteration 18
+Producer 1 Produced: Product<58> on iteration 19
+Producer 1 is done. Shutting down.
+Consumer 3 Consumed: Product<26>
+Consumer 3 Consumed: Product<50>
+Consumer 3 Consumed: Product<51>
+Consumer 3 Consumed: Product<52>
+Consumer 3 Consumed: Product<53>
+Consumer 3 Consumed: Product<54>
+Consumer 3 Consumed: Product<55>
+Consumer 3 Consumed: Product<56>
+Consumer 3 Consumed: Product<57>
+Consumer 3 Consumed: Product<58>
+Consumer 3 received done notification. Goodbye.
+Producer 2 Produced: Product<59> on iteration 1
+Producer 2 Produced: Product<60> on iteration 2
+Producer 2 Produced: Product<61> on iteration 3
+Producer 2 Produced: Product<62> on iteration 4
+Producer 2 Produced: Product<63> on iteration 5
+Producer 2 Produced: Product<64> on iteration 6
+Producer 2 Produced: Product<65> on iteration 7
+Producer 2 Produced: Product<66> on iteration 8
+Consumer 4 Consumed: Product<15>
+Consumer 4 Consumed: Product<27>
+Consumer 4 Consumed: Product<59>
+Consumer 4 Consumed: Product<60>
+Consumer 4 Consumed: Product<61>
+Consumer 4 Consumed: Product<62>
+Consumer 4 Consumed: Product<63>
+Consumer 4 Consumed: Product<64>
+Consumer 4 Consumed: Product<65>
+Consumer 4 Consumed: Product<66>
+Producer 3 Produced: Product<67> on iteration 10
+Producer 6 Produced: Product<69> on iteration 9
+Producer 3 Produced: Product<70> on iteration 11
+Producer 6 Produced: Product<71> on iteration 10
+Producer 3 Produced: Product<72> on iteration 12
+Producer 6 Produced: Product<73> on iteration 11
+Producer 3 Produced: Product<74> on iteration 13
+Producer 6 Produced: Product<75> on iteration 12
+Producer 3 Produced: Product<76> on iteration 14
+Producer 6 Produced: Product<77> on iteration 13
+Producer 3 Produced: Product<78> on iteration 15
+Producer 8 Produced: Product<68> on iteration 0
+Consumer 4 Consumed: Product<67>
+Consumer 1 Consumed: Product<70>
+Producer 0 Produced: Product<81> on iteration 13
+Consumer 4 Consumed: Product<72>
+Producer 0 Produced: Product<82> on iteration 14
+Consumer 4 Consumed: Product<73>
+Producer 0 Produced: Product<83> on iteration 15
+Consumer 4 Consumed: Product<74>
+Producer 0 Produced: Product<84> on iteration 16
+Producer 0 Produced: Product<85> on iteration 17
+Producer 0 Produced: Product<86> on iteration 18
+Producer 0 Produced: Product<87> on iteration 19
+Producer 0 is done. Shutting down.
+Consumer 0 Consumed: Product<69>
+Consumer 0 Consumed: Product<76>
+Consumer 0 Consumed: Product<77>
+Consumer 0 Consumed: Product<78>
+Consumer 0 Consumed: Product<81>
+Consumer 0 Consumed: Product<82>
+Consumer 0 Consumed: Product<83>
+Consumer 0 Consumed: Product<84>
+Consumer 0 Consumed: Product<85>
+Consumer 0 Consumed: Product<86>
+Consumer 0 Consumed: Product<87>
+Consumer 0 received done notification. Goodbye.
+Producer 3 Produced: Product<80> on iteration 16
+Producer 9 Produced: Product<79> on iteration 1
+Producer 8 Produced: Product<88> on iteration 1
+Producer 3 Produced: Product<90> on iteration 17
+Consumer 5 Consumed: Product<68>
+Producer 3 Produced: Product<92> on iteration 18
+Consumer 5 Consumed: Product<79>
+Producer 3 Produced: Product<93> on iteration 19
+Consumer 5 Consumed: Product<80>
+Producer 3 is done. Shutting down.
+Consumer 5 Consumed: Product<88>
+Consumer 5 Consumed: Product<90>
+Consumer 5 Consumed: Product<92>
+Consumer 5 Consumed: Product<93>
+Consumer 5 received done notification. Goodbye.
+Consumer 4 Consumed: Product<75>
+Consumer 1 Consumed: Product<71>
+Producer 8 Produced: Product<90> on iteration 2
+Producer 9 Produced: Product<89> on iteration 2
+Producer 6 Produced: Product<94> on iteration 14
+Producer 6 Produced: Product<95> on iteration 15
+Producer 6 Produced: Product<96> on iteration 16
+Producer 6 Produced: Product<97> on iteration 17
+Producer 6 Produced: Product<98> on iteration 18
+Producer 6 Produced: Product<99> on iteration 19
+Producer 6 is done. Shutting down.
+Consumer 9 Consumed: Product<94>
+Consumer 9 Consumed: Product<95>
+Consumer 9 Consumed: Product<96>
+Consumer 9 Consumed: Product<97>
+Consumer 9 Consumed: Product<98>
+Consumer 9 Consumed: Product<99>
+Consumer 2 received done notification. Goodbye.
+Producer 2 Produced: Product<100> on iteration 9
+Consumer 9 Consumed: Product<100>
+Producer 2 Produced: Product<101> on iteration 10
+Consumer 9 Consumed: Product<101>
+Producer 2 Produced: Product<102> on iteration 11
+Consumer 9 Consumed: Product<102>
+Producer 2 Produced: Product<103> on iteration 12
+Consumer 9 Consumed: Product<103>
+Producer 2 Produced: Product<104> on iteration 13
+Consumer 9 Consumed: Product<104>
+Producer 2 Produced: Product<105> on iteration 14
+Producer 2 Produced: Product<106> on iteration 15
+Producer 2 Produced: Product<107> on iteration 16
+Producer 2 Produced: Product<108> on iteration 17
+Producer 2 Produced: Product<109> on iteration 18
+Consumer 9 Consumed: Product<105>
+Producer 2 Produced: Product<110> on iteration 19
+Consumer 9 Consumed: Product<106>
+Producer 4 Produced: Product<111> on iteration 4
+Producer 4 Produced: Product<112> on iteration 5
+Producer 4 Produced: Product<113> on iteration 6
+Producer 4 Produced: Product<114> on iteration 7
+Producer 4 Produced: Product<115> on iteration 8
+Producer 4 Produced: Product<116> on iteration 9
+Producer 2 is done. Shutting down.
+Consumer 9 Consumed: Product<107>
+Consumer 8 Consumed: Product<109>
+Consumer 8 Consumed: Product<110>
+Consumer 8 received done notification. Goodbye.
+Producer 4 Produced: Product<117> on iteration 10
+Producer 4 Produced: Product<118> on iteration 11
+Producer 4 Produced: Product<119> on iteration 12
+Consumer 9 Consumed: Product<112>
+Producer 9 Produced: Product<121> on iteration 3
+Consumer 9 Consumed: Product<113>
+Producer 9 Produced: Product<122> on iteration 4
+Consumer 9 Consumed: Product<114>
+Producer 9 Produced: Product<123> on iteration 5
+Consumer 9 Consumed: Product<115>
+Producer 9 Produced: Product<124> on iteration 6
+Producer 9 Produced: Product<125> on iteration 7
+Consumer 9 Consumed: Product<116>
+Producer 8 Produced: Product<126> on iteration 3
+Producer 5 Produced: Product<127> on iteration 0
+Consumer 7 Consumed: Product<108>
+Producer 4 Produced: Product<120> on iteration 13
+Consumer 6 Consumed: Product<111>
+Consumer 6 Consumed: Product<117>
+Consumer 4 Consumed: Product<118>
+Consumer 1 Consumed: Product<119>
+Consumer 1 Consumed: Product<89>
+Producer 4 Produced: Product<128> on iteration 14
+Consumer 1 Consumed: Product<121>
+Producer 4 Produced: Product<129> on iteration 15
+Consumer 1 Consumed: Product<122>
+Producer 4 Produced: Product<130> on iteration 16
+Producer 4 Produced: Product<131> on iteration 17
+Consumer 1 Consumed: Product<123>
+Consumer 1 Consumed: Product<124>
+Producer 4 Produced: Product<132> on iteration 18
+Consumer 1 Consumed: Product<90>
+Producer 4 Produced: Product<133> on iteration 19
+Consumer 1 Consumed: Product<125>
+Producer 4 is done. Shutting down.
+Consumer 1 Consumed: Product<126>
+Consumer 1 Consumed: Product<127>
+Consumer 4 Consumed: Product<120>
+Consumer 1 Consumed: Product<128>
+Consumer 4 Consumed: Product<129>
+Consumer 1 Consumed: Product<130>
+Consumer 4 Consumed: Product<131>
+Consumer 1 Consumed: Product<132>
+Consumer 4 Consumed: Product<133>
+Consumer 1 received done notification. Goodbye.
+Producer 8 Produced: Product<134> on iteration 4
+Producer 8 Produced: Product<135> on iteration 5
+Producer 8 Produced: Product<136> on iteration 6
+Producer 8 Produced: Product<137> on iteration 7
+Producer 8 Produced: Product<138> on iteration 8
+Producer 8 Produced: Product<139> on iteration 9
+Producer 8 Produced: Product<140> on iteration 10
+Producer 8 Produced: Product<141> on iteration 11
+Producer 8 Produced: Product<142> on iteration 12
+Producer 8 Produced: Product<143> on iteration 13
+Consumer 7 Consumed: Product<134>
+Consumer 7 Consumed: Product<135>
+Consumer 7 Consumed: Product<136>
+Consumer 7 Consumed: Product<137>
+Producer 9 Produced: Product<145> on iteration 8
+Producer 7 Produced: Product<146> on iteration 1
+Producer 9 Produced: Product<147> on iteration 9
+Producer 7 Produced: Product<148> on iteration 2
+Producer 9 Produced: Product<149> on iteration 10
+Producer 7 Produced: Product<150> on iteration 3
+Consumer 7 Consumed: Product<138>
+Consumer 7 Consumed: Product<139>
+Producer 5 Produced: Product<144> on iteration 1
+Consumer 4 Consumed: Product<140>
+Consumer 4 Consumed: Product<141>
+Consumer 9 Consumed: Product<142>
+Consumer 4 Consumed: Product<143>
+Consumer 9 Consumed: Product<145>
+Consumer 4 Consumed: Product<146>
+Consumer 9 Consumed: Product<147>
+Consumer 4 Consumed: Product<148>
+Consumer 9 Consumed: Product<149>
+Consumer 4 Consumed: Product<150>
+Consumer 9 Consumed: Product<144>
+Producer 5 Produced: Product<151> on iteration 2
+Producer 7 Produced: Product<152> on iteration 4Exception in thread "Thread-18" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.LinkedList.checkElementIndex(LinkedList.java:553)
+	at java.util.LinkedList.remove(LinkedList.java:523)
+	at ProductionLine.retrieve(ProductionLine.java:21)
+	at Consumer.run(Consumer.java:20)
+	at java.lang.Thread.run(Thread.java:745)
+
+Producer 9 Produced: Product<155> on iteration 11
+Consumer 6 Consumed: Product<155>
+Producer 9 Produced: Product<156> on iteration 12
+Consumer 6 Consumed: Product<156>
+Producer 9 Produced: Product<157> on iteration 13
+Consumer 4 Consumed: Product<151>
+Producer 8 Produced: Product<154> on iteration 14
+Producer 5 Produced: Product<153> on iteration 3
+Producer 5 Produced: Product<160> on iteration 4
+Producer 7 Produced: Product<159> on iteration 5
+Producer 5 Produced: Product<161> on iteration 5
+Producer 7 Produced: Product<162> on iteration 6
+Producer 5 Produced: Product<163> on iteration 6
+Producer 7 Produced: Product<164> on iteration 7
+Producer 8 Produced: Product<158> on iteration 15
+Producer 8 Produced: Product<167> on iteration 16
+Consumer 4 Consumed: Product<152>
+Producer 8 Produced: Product<168> on iteration 17
+Consumer 4 Consumed: Product<153>
+Producer 8 Produced: Product<169> on iteration 18
+Consumer 4 Consumed: Product<160>
+Producer 8 Produced: Product<170> on iteration 19
+Consumer 4 Consumed: Product<159>
+Producer 8 is done. Shutting down.
+Consumer 4 Consumed: Product<161>
+Consumer 4 Consumed: Product<162>
+Consumer 4 Consumed: Product<163>
+Producer 5 Produced: Product<165> on iteration 7
+Consumer 4 Consumed: Product<164>
+Consumer 4 Consumed: Product<158>
+Consumer 4 Consumed: Product<167>
+Producer 5 Produced: Product<171> on iteration 8
+Producer 5 Produced: Product<173> on iteration 9
+Producer 7 Produced: Product<166> on iteration 8
+Consumer 4 Consumed: Product<168>
+Consumer 4 Consumed: Product<170>
+Consumer 4 received done notification. Goodbye.
+Consumer 9 Consumed: Product<169>
+Producer 5 Produced: Product<174> on iteration 10
+Consumer 6 Consumed: Product<154>
+Producer 9 Produced: Product<172> on iteration 14
+Producer 5 Produced: Product<176> on iteration 11
+Producer 9 Produced: Product<177> on iteration 15
+Producer 5 Produced: Product<178> on iteration 12
+Producer 9 Produced: Product<179> on iteration 16
+Producer 5 Produced: Product<180> on iteration 13
+Producer 7 Produced: Product<175> on iteration 9
+Consumer 9 Consumed: Product<165>
+Consumer 6 Consumed: Product<157>
+Consumer 6 Consumed: Product<171>
+Consumer 6 Consumed: Product<173>
+Consumer 6 Consumed: Product<166>
+Consumer 6 Consumed: Product<174>
+Consumer 6 Consumed: Product<172>
+Consumer 6 Consumed: Product<176>
+Consumer 6 Consumed: Product<177>
+Consumer 6 Consumed: Product<178>
+Consumer 6 Consumed: Product<179>
+Consumer 6 Consumed: Product<180>
+Consumer 6 Consumed: Product<175>
+Producer 5 Produced: Product<181> on iteration 14
+Consumer 6 Consumed: Product<181>
+Producer 5 Produced: Product<182> on iteration 15
+Consumer 6 Consumed: Product<182>
+Producer 5 Produced: Product<183> on iteration 16
+Consumer 6 Consumed: Product<183>
+Producer 5 Produced: Product<184> on iteration 17
+Consumer 6 Consumed: Product<184>
+Producer 5 Produced: Product<185> on iteration 18
+Consumer 6 Consumed: Product<185>
+Producer 5 Produced: Product<186> on iteration 19
+Producer 9 Produced: Product<187> on iteration 17
+Producer 9 Produced: Product<188> on iteration 18
+Producer 9 Produced: Product<189> on iteration 19
+Producer 9 is done. Shutting down.
+Producer 7 Produced: Product<190> on iteration 10
+Producer 7 Produced: Product<191> on iteration 11
+Producer 7 Produced: Product<192> on iteration 12
+Producer 7 Produced: Product<193> on iteration 13
+Producer 7 Produced: Product<194> on iteration 14
+Producer 7 Produced: Product<195> on iteration 15
+Consumer 6 Consumed: Product<187>
+Consumer 6 Consumed: Product<188>
+Consumer 6 Consumed: Product<189>
+Consumer 6 received done notification. Goodbye.
+Producer 5 is done. Shutting down.
+Consumer 9 Consumed: Product<190>
+Consumer 9 Consumed: Product<191>
+Consumer 9 Consumed: Product<192>
+Consumer 9 Consumed: Product<193>
+Consumer 9 Consumed: Product<194>
+Consumer 9 Consumed: Product<195>
+Consumer 9 Consumed: Product<186>
+Consumer 9 received done notification. Goodbye.
+Producer 7 Produced: Product<196> on iteration 16
+Producer 7 Produced: Product<197> on iteration 17
+Producer 7 Produced: Product<198> on iteration 18
+Producer 7 Produced: Product<199> on iteration 19
+Producer 7 is done. Shutting down.
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+
