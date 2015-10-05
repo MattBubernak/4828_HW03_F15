@@ -227,7 +227,7 @@ The above excerpt shows that Producer 7 produced product 199. However, the consu
 ```
 #3 Fixed
 
-3. Initial Attempt At Solution
+#### Initial Attempt At Solution
 
 Our first attempt involved using synchronization to an object ```lock``` to synchronize the run functions within Producer and Consumer thus preventing multiple threads from accessing any of the blocked code at once. 
 
