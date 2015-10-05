@@ -226,3 +226,96 @@ The above excerpt shows that Producer 7 produced product 199. However, the consu
 
 ```
 #3 Fixed
+
+3. Initial Attempt At Solution
+
+Our first attempt involved using synchronization to an object ```lock``` to synchronize the run functions within Producer and Consumer thus preventing multiple threads from accessing any of the blocked code at once. 
+
+Producer:
+
+```
+synchronized(lock) {
+      while (count < 20) {
+        
+        if (queue.size() < 10) {
+          Product p = new Product();
+          String msg = "Producer %d Produced: %s on iteration %d";
+          System.out.println(String.format(msg, id, p, count));
+          queue.append(p);
+          count++;
+        }
+      }
+      Product p = new Product();
+      p.productionDone();
+      queue.append(p);
+      String msg = "Producer %d is done. Shutting down.";
+      System.out.println(String.format(msg, id));
+    }
+  }
+```
+
+Consumer
+
+```
+  public void run() {
+    while (true) {
+      synchronized(lock) {
+        if (queue.size() > 0) {
+          Product p = queue.retrieve();
+          if (p.isDone()) {
+            String msg = "Consumer %d received done notification. Goodbye.";
+            System.out.println(String.format(msg, id));
+            return;
+          } else {
+            products.put(p.id(), p);
+            String msg = "Consumer %d Consumed: %s";
+            System.out.println(String.format(msg, id, p));
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+This solution seems to work and has produced correct results every time we've run it. However, we think that this may not be the most efficient method and may prevent much possible parallelism. Only one thread may access the code held within the run function at any time meaning at any given only one consumer and one producer are active. New threads begin only once others have exited. This is shown in the following output where producer 9 does not begin until Producer 0 has shut down:
+
+```
+Producer 0 Produced: Product<0> on iteration 0
+Producer 0 Produced: Product<1> on iteration 1
+Producer 0 Produced: Product<2> on iteration 2
+Producer 0 Produced: Product<3> on iteration 3
+Producer 0 Produced: Product<4> on iteration 4
+Producer 0 Produced: Product<5> on iteration 5
+Producer 0 Produced: Product<6> on iteration 6
+Producer 0 Produced: Product<7> on iteration 7
+Producer 0 Produced: Product<8> on iteration 8
+Producer 0 Produced: Product<9> on iteration 9
+Queue Size: 10
+Queue Size: 10
+Consumer 0 Consumed: Product<0>
+Producer 0 Produced: Product<10> on iteration 10
+Consumer 0 Consumed: Product<1>
+Consumer 0 Consumed: Product<2>
+Producer 0 Produced: Product<11> on iteration 11
+Consumer 0 Consumed: Product<3>
+Producer 0 Produced: Product<12> on iteration 12
+Consumer 0 Consumed: Product<4>
+Producer 0 Produced: Product<13> on iteration 13
+Consumer 0 Consumed: Product<5>
+Producer 0 Produced: Product<14> on iteration 14
+Consumer 0 Consumed: Product<6>
+Producer 0 Produced: Product<15> on iteration 15
+Consumer 0 Consumed: Product<7>
+Producer 0 Produced: Product<16> on iteration 16
+Consumer 0 Consumed: Product<8>
+Producer 0 Produced: Product<17> on iteration 17
+Consumer 0 Consumed: Product<9>
+Producer 0 Produced: Product<18> on iteration 18
+Consumer 0 Consumed: Product<10>
+Producer 0 Produced: Product<19> on iteration 19
+Consumer 0 Consumed: Product<11>
+Producer 0 is done. Shutting down.
+Consumer 0 Consumed: Product<12>
+Producer 9 Produced: Product<20> on iteration 0
+```
