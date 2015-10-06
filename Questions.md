@@ -319,3 +319,78 @@ Producer 0 is done. Shutting down.
 Consumer 0 Consumed: Product<12>
 Producer 9 Produced: Product<20> on iteration 0
 ```
+
+As a result, we re-thought the solution a bit and made some significant modifications. Two major issues that needed to be overcome were synchronization of the creation of Products, and access to the queue. We decided to handle access to the queue through the ProductionLine, so the code simplified a bit in Producer/Consumer. 
+
+Consider the below code snippet, and notice that Producer no longer checks the queue size, it just attempts to append. We do still have to avoid race conditions with product creation, so we created an "obj1" and synchronize on that for all product creations. 
+```
+private static Object obj1 = new Object();
+...
+while (count < 20) {
+      synchronized(obj1){
+        p = new Product();
+      }
+      queue.append(p);
+      String msg = "Producer %d Produced: %s on iteration %d";
+      System.out.println(String.format(msg, id, p, count));
+      count++;
+    }
+    synchronized(obj1){
+       p = new Product();
+    }
+```
+
+The below code snippet is from the run method of Consumers. They no longer check(or have to be synchronized) on the queue size, within their own methods. However, as we will see in the ProductionLine, retrieve is not asynchronous which adds a bit of complexity here. 
+
+```
+while (true) {
+      try {Product p = queue.retrieve();
+      if (p.isDone()) {
+        String msg = "Consumer %d received done notification. Goodbye.";
+        System.out.println(String.format(msg, id));
+        return;
+      } else {
+        products.put(p.id(), p);
+        String msg = "Consumer %d Consumed: %s";
+        System.out.println(String.format(msg, id, p));
+      }
+    }
+    catch (InterruptedException e) {}
+    }
+  }
+```
+
+Now we, finally, can look at the productionLine. We need to handle access to the queue, and also deal with limiting apends/retrieves to their respective conditions(products.size() < 10 , or products.size() > 0). We choose to use reentrant lock combined with conditions to get the required behavior. 
+
+```
+ReentrantLock lock1 = new ReentrantLock();
+Condition condition1 = lock1.newCondition();
+```
+Lock1 and Condition1 are used when either `append()` or `retrieve` methods attempt to access the queue. Now, we look at append. 
+```
+  public void append(Product p) {
+     lock1.lock();
+     try {
+      while (!(products.size() < 10)) { condition1.await();}
+      products.add(p);
+      condition1.signal();
+    } catch (InterruptedException e) {} finally { lock1.unlock();}
+   }
+```
+First we lock the lock, then we check on the condition, If the size is less than 10, we will do the insert, signal any other threads waiting on this lock(append/retreive), and exit. 
+```
+public Product retrieve() throws InterruptedException {
+     // should never return this. 
+    Product tmp;
+    lock1.lock(); 
+    try {
+        while (!(products.size() > 0)) { condition1.await();}
+        tmp = products.remove(0);
+        condition1.signal();
+
+     } catch (InterruptedException e) {tmp = new Product();} finally {lock1.unlock();}
+    
+    return tmp;
+   }
+```
+Retrieve has a similar behavior. We lock the same lock, but check a slightly different condition. When the size is greater than 0, a product is actually removed, other threds are signaled, and the product is returned. 
