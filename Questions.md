@@ -72,11 +72,21 @@ Producer 6 Produced: Product<11> on iteration 1, 3
  
 ####Producers/Consumers stall out
 
-When this code is run, this happens to my CPU. 
+As shown in the following screenshot taken from Matt's computer, running the broken program leads to very high CPU usage with no progress being made. 
 
 <img src="CPU_Utilization.PNG" alt="Drawing" style="width: 200px; height:200px;"/>
 
-Very high CPU utilization, with no progress being made. If we had locks, we may suspect some sort of livelock situation. However, since there is no syncronization implemented, the issue must lie with the "while" loops in the producers/consumers. I added some basic output in the form of an "else" statement, in both the proder and consumer. I saw that all consumers stop because they see that `queue.size()` eventually starts returning 0, always. From the producers perspective, `queue.size()` returns some number larger than 10. Therefore, all threads keep looping and using CPU, but nothing is happening. Our suspicion here is that there are the obvious race conditions in the queue modification(which also lead to the null pointer exception that ends the life of some threads, an artifcat of race conditions), but it seems like queue.size() reads seem to be getting stuck, as if they are not updating. This could have to do with the java memory barrier. The ProductionLine queue is built using a list, but updates to the list size do not cross the memory barrier between producers and consumers. Producers have no way knowing that after the consumers kick in, there is now room again to add to the queue. They still see the size of the queue at 19.Modifying the following line in ProductionLine `private List<Product> products;` to include `volatile` changes the behavior (but does not prevent any of the other problems) and prevents this infinite stuck loop most of the time. 
+```
+Queue empty!
+Queue empty!
+Queue empty!
+Queue empty!
+Queue empty!
+```
+
+This problem may have to do with the java memory barrier. The ProductionLine queue is built using a list, but updates to the list size do not cross the memory barrier between producers and consumers. Producers have no way knowing that after the consumers kick in, there is now room again to add to the queue. They still see the size of the queue at 19. Modifying the following line in ProductionLine `private List<Product> products;` to include `volatile` changes the behavior (but does not prevent any of the other problems) and prevents this infinite stuck loop most of the time. 
+
+We also considered that if we had locks, we may suspect some sort of livelock situation. However, since there is no syncronization implemented, the issue must lie with the "while" loops in the producers/consumers. Adding some basic output in the form of an "else" statement, in both the producer and consumer displays that all consumers stop because they see that `queue.size()` eventually will only return 0. From the producer's perspective, `queue.size()` returns some number larger than 10. Therefore, all threads keep looping and using CPU, but nothing is happening.
 
   
   
@@ -84,7 +94,7 @@ Very high CPU utilization, with no progress being made. If we had locks, we may 
 Putting the keyword `synchronized` separately in the methods of 'ProductionLine.java' file sychronizes these methods independent of each other. However, it does not rid the program of all the concurrency issues.
 
 ####Race Condition 1:
-In the 'Producer.java' file, the following snippet of code demonstrates that there is still race conditions happening around the code `Product p = new Product()`.
+In the 'Producer.java' file, the following snippet of code demonstrates that there are still race conditions happening around the code `Product p = new Product()`.
 
 ```
     while (count < 20) {
@@ -99,8 +109,7 @@ In the 'Producer.java' file, the following snippet of code demonstrates that the
     }
 ```
 
-Adding `synchronized` keyword on the 'ProductionLine.java' file does not address the issue of race condition around the creation of new products that get added to the queue. To illustrate the race condition, let's take a look at the following output obtained when running the broken 2 program.
-
+Adding `synchronized` keyword on the 'ProductionLine.java' file does not address the issue of race condition around the creation of new products that get added to the queue. To illustrate the race condition, consider the following output obtained when running the broken2 program.
 
 Output excerpt:
 ```
@@ -132,14 +141,14 @@ Consumer 3 Consumed: Product<10>
 Consumer 3 Consumed: Product<8>
 ```
 
-In the output excerpt, looking at `Product<8>`, it is evident that there is race condition around product creation. `Product<8>` gets created by Producers 0 and 1 and consumers 1 and 3 consume the product. This shows that adding the `synchronized` in all the methods of 'ProductionLine.java' does not rid the program of all the race conditions.
+In the output excerpt, looking at `Product<8>`, it is evident that there is a race condition around product creation. `Product<8>` gets created by Producers 0 and 1 and consumers 1 and 3 consume the product. Clearly, adding the `synchronized` in all the methods of 'ProductionLine.java' does not rid the program of all the race conditions.
 
 ####Race Condition 2:
-In spite of using the `synchronized` keyword, there is still a race condition. `synchronized` keyword does not co-ordinate the actions between different methods. The action of retrieving a product from the queue should be followed by decrementing the size of the queue and then only another consumer thread should be allowed to check the size of the queue. Hence, retrieve and size checking should be handled as **a transaction**. Similarly, when a producer produces an item, it is followed by increasing the size of the queue. Adding `synchronized` keyword on the retrieve, append and size methods in 'ProductionLine.java'  does not guarantee that the folloiwng actions will be handled as a transaction:
+In spite of using the `synchronized` keyword, there is still another race condition. The `synchronized` keyword does not co-ordinate the actions between different methods. The action of retrieving a product from the queue should be followed by decrementing the size of the queue, and then only another consumer thread should be allowed to check the size of the queue. Hence, retrieve and size checking should be handled as **a transaction**. Similarly, when a producer produces an item, it is followed by increasing the size of the queue. Adding `synchronized` keyword on the retrieve, append and size methods in 'ProductionLine.java'  does not guarantee that the folloiwng actions will be handled as a transaction:
 * append a product and then increment the size of the queue
 * retrieve a product and then decrement the size of the queue
 
-This might lead to a situation where, for instance, 8 threads read the size of the queue being greater than zero. Hence, they enter the following section of code in a synchronized fashion but before the size of the queue gets updated by consumer threads already inside the `if` statement.
+This might lead to a situation where, for instance, 8 threads read the size of the queue as greater than zero. Hence, they enter the following section of code in a synchronized fashion but before the size of the queue gets updated by consumer threads already inside the `if` statement.
 
 ```
 if (queue.size() > 0) {
@@ -156,9 +165,9 @@ if (queue.size() > 0) {
       }
 ```
 
-This situation becomes catastrophic if the number of elements in the queue is 7 and there are 8 consumer threads in the `if` statement awaiting to retrieve the products from the queue in a synchronized manner. This leads to the program running into  `IndexOutOfBoundsException`.
+This situation becomes catastrophic if the number of elements in the queue is 7 and there are 8 consumer threads in the `if` statement waiting to retrieve the products from the queue in a synchronized manner. This leads to the program running into an  `IndexOutOfBoundsException`.
 
-On running broken 2 program, the following output was obtained that demonstrates the existence of race condition 2. When running the program, the following `IndexOutOfBoundsException` was seen:
+On running the broken2 program, the following output was obtained that demonstrates the existence of race condition 2. When running the program, the following `IndexOutOfBoundsException` was seen:
 
 ```
 Producer 7 Produced: Product<152> on iteration 4Exception in thread "Thread-18" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
@@ -169,7 +178,7 @@ Producer 7 Produced: Product<152> on iteration 4Exception in thread "Thread-18" 
 	at java.lang.Thread.run(Thread.java:745)
 ``` 
 
-As a result of the `IndexOutOfBoundsException`, the consumer thread was killed. This created a scenario where all the producer threads produced but there weren't enough consumer threads to empty the queue.
+As a result of the `IndexOutOfBoundsException`, the consumer thread was killed creating a scenario where all the producer threads produced but there weren't enough consumer threads to empty the queue.
 
 ```
 Producer 7 Produced: Product<190> on iteration 10
@@ -209,7 +218,7 @@ Producer 7 is done. Shutting down.
 10
 ```
 
-The above excerpt shows that Producer 7 produced product 199. However, the consumer only consumed upto 195 as seen in the following excerpt.
+The above excerpt shows that Producer 7 produced product 199. However, the consumer only consumed up to 195 as seen in the following excerpt.
 
 ```
 179
@@ -284,7 +293,7 @@ Consumer:
 }
 ```
 
-This solution seems to work and has produced correct results every time we've run it. However, we think that this may not be the most efficient method and may prevent much possible parallelism. Only one thread may access the code held within the run function at any time meaning at any given only one consumer and one producer are active. New threads begin only once others have exited. This is shown in the following output where producer 9 does not begin until Producer 0 has shut down:
+This solution seems to work and has produced correct results every time we've run it. However, we think that this may not be the most efficient method and may prevent much possible parallelism. Only one thread may access the code held within the run function at any time meaning at any given time only one consumer and one producer are active. New threads begin only once others have exited. This is shown in the following output where producer 9 does not begin until Producer 0 has shut down:
 
 ```
 Producer 0 Produced: Product<0> on iteration 0
