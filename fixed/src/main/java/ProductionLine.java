@@ -8,8 +8,6 @@ public class ProductionLine {
    private volatile List<Product> products;
    ReentrantLock lock1 = new ReentrantLock();
    Condition condition1 = lock1.newCondition();    
-   ReentrantLock lock2 = new ReentrantLock();
-   Condition condition2 = lock2.newCondition(); 
 
    public ProductionLine() {
      products = new LinkedList<Product>();
