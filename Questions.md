@@ -321,7 +321,7 @@ Producer 9 Produced: Product<20> on iteration 0
 ```
 
 #### Our final solution
-As a result, we re-thought the solution a bit and made some significant modifications. Two major issues that needed to be overcome were synchronization of the creation of Products, and access to the queue. We decided to handle access to the queue through the ProductionLine, so the code simplified a bit in Producer/Consumer. 
+As a result, we re-thought the solution a bit and made some significant modifications. Two major issues that needed to be overcome were synchronization of the creation of products, and access to the queue. We decided to handle access to the queue through the ProductionLine, so the code simplified a bit in Producer/Consumer. 
 
 Consider the below code snippet, and notice that Producer no longer checks the queue size, it just attempts to append. We do still have to avoid race conditions with product creation, so we created an "obj1" and synchronize on that for all product creations. 
 ```
@@ -367,7 +367,7 @@ Now we, finally, can look at the productionLine. We need to handle access to the
 ReentrantLock lock1 = new ReentrantLock();
 Condition condition1 = lock1.newCondition();
 ```
-Lock1 and Condition1 are used when either `append()` or `retrieve` methods attempt to access the queue. Now, we look at append. 
+Lock1 and Condition1 are used when either `append()` or `retrieve()` methods attempt to access the queue. Now, we look at append. 
 ```
   public void append(Product p) {
      lock1.lock();
