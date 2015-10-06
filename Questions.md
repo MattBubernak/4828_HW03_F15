@@ -394,3 +394,20 @@ public Product retrieve() throws InterruptedException {
    }
 ```
 Retrieve has a similar behavior. We lock the same lock, but check a slightly different condition. When the size is greater than 0, a product is actually removed, other threds are signaled, and the product is returned. 
+
+Here is a snippet of the final output... Looks better!
+
+```
+Producer 0 Produced: Product<13> on iteration 1
+Consumer 1 Consumed: Product<5>
+Producer 3 Produced: Product<14> on iteration 1
+Producer 9 Produced: Product<12> on iteration 1
+Producer 7 Produced: Product<10> on iteration 1
+Consumer 1 Consumed: Product<2>
+Producer 0 Produced: Product<21> on iteration 2
+Consumer 0 Consumed: Product<3>
+Producer 8 Produced: Product<19> on iteration 1
+Producer 2 Produced: Product<18> on iteration 1
+Consumer 0 Consumed: Product<11>
+Producer 1 Produced: Product<15> on iteration 1
+```
