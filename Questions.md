@@ -1,3 +1,7 @@
+CSCI 5828 – Fall 2015
+Homework 3
+Partners: Matt Bubernak, Rabin Ranabhat, William Payne
+
 #1: Broken
 
 There are clearly multiple concurrency related issues occurring with “broken” The behavior we see is generally something along the lines of this: Producers produce too many products(>10), monitor identifies the queue is too full(19), consumers begin consuming, there are sometimes null pointer exceptions, and then there is only visible monitor behavior from that point on. 
