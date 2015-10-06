@@ -394,7 +394,7 @@ public Product retrieve() throws InterruptedException {
     return tmp;
    }
 ```
-Retrieve has a similar behavior. We lock the same lock, but check a slightly different condition. When the size is greater than 0, a product is actually removed, other threds are signaled, and the product is returned. 
+Retrieve has a similar behavior. We lock the same lock, but check a slightly different condition. When the size is greater than 0, a product is actually removed, other threads are signaled, and the product is returned. 
 
 Here is a snippet of the final output... Looks better!
 
