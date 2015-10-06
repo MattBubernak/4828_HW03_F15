@@ -1,5 +1,7 @@
 CSCI 5828 – Fall 2015
+
 Homework 3
+
 Partners: Matt Bubernak, Rabin Ranabhat, William Payne
 
 #1: Broken
